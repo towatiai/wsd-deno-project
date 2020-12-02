@@ -16,7 +16,7 @@ on:
 
 jobs:
   test:
-    runs-on: uduntu-latest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
