@@ -12,17 +12,34 @@ CREATE TABLE IF NOT EXISTS users (
     email       VARCHAR(320) NOT NULL,
     password    CHAR(60) NOT NULL
 );
+
+CREATE UNIQUE INDEX ON users((lower(email)));
 `;
 
-const CREATE_SLEEP = `
-CREATE TABLE IF NOT EXISTS sleep (
-    sleeptime       FLOAT8 NOT NULL,
-    sleepquality    
+const CREATE_USER_DATA = `
+CREATE TABLE IF NOT EXISTS user_data (
+    sleep_time      FLOAT8,
+    sleep_quality   INTEGER,
+    mood            INTEGER,
+    sports_time     FLOAT8, 
+    studying_time   FLOAT8,
+    eating          INTEGER,
+    datetime        timestamptz NOT NULL,
+    user_id         INTEGER REFERENCES users(id)
 );
 `;
 
-export const createTables = () => {
+export default async () => {
 
-
-
+    try {
+        await runQuery(CREATE_USERS);
+        await runQuery(CREATE_USER_DATA);
+        console.log("%cDatabase tables created.", "color:green;");
+    } catch(e) {
+        console.error("Failed to create tables. Check other errors for possible causes.");
+        console.log(e);
+        return false;
+    }
+    
+    return true;
 } 
