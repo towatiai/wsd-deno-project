@@ -1,0 +1,26 @@
+body {
+
+}
+
+.header {
+    padding: 24px;
+}
+
+.slider {
+    margin: 0px 10px;
+}
+
+.icon-sm {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.icon-md {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.icon-lg {
+    width: 4rem;
+    height: 4rem;
+}
