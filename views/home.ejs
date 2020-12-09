@@ -1,5 +1,59 @@
-<%- include("./partials/header.ejs") %> 
+<%- include("./partials/header.ejs") %>
 
-<h2>Home page</h2>
+<h2>Welcome to the self-monitor!</h2>
+
+<p>In the report section you can report your general mood, as well as find morning and evening section:</p>
+
+<ul>
+    <li>Morning section contains information about how slept.</li>
+    <li>Evening section asks you about your day, for example how much you spent time on exercising and studying.</li>
+</ul>
+
+<p>In the summary page you can find useful statistics and trends. Happy reporting!</p>
+
+
+<% if (today?.avg_mood && yesterday?.avg_mood) { %>
+
+<h3>Mood trend</h3>
+
+<% if (today.avg_mood - yesterday.avg_mood > 0) { %>
+
+<p>You are looking gloomy today!</p>
+
+<% } else { %>
+
+<p>You are looking bright today!</p>
+
+<% } %>
+
+<div class="d-flex flex-wrap mt-3">
+
+    <div class="card mb-3 mr-3" style="max-width: 18rem;">
+        <div class="card-header">General mood</div>
+
+        <div class="card-body">
+            <div class="d-flex">
+                <h5 class="card-title"><%= parseFloat(today.avg_mood).toFixed(1) %></h5>
+                <p style="margin-top: 0.8rem;">/5</p>
+                <h5 style="margin: 8px; color:<%= today.avg_mood - yesterday.avg_mood > 0 ? "seagreen" : "salmon" %>;">
+                    <%= today.avg_mood - yesterday.avg_mood > 0 ? "+" : "-" %>
+                    <%= parseFloat(Math.abs(today.avg_mood - yesterday.avg_mood)).toFixed(1) %>
+                </h5>
+            </div>
+
+            <p class="card-text">compared to yesterday</p>
+        </div>
+    </div>
+
+    <div class="card mb-3 mr-3" style="max-width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-text mb-4">Check out rest of your stats!</h5>
+            <a href="/behavior/summary" class="btn btn-primary">Go to summary</a>
+        </div>
+    </div>
+
+</div>
+
+<% } %>
 
 <%- include("./partials/footer.ejs") %>

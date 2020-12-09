@@ -66,6 +66,28 @@ export const getReportSummaryForMonth = async(id, month) => {
 }
 
 
+export const getMoodSummaryForPastTwoDays = async(id) => {
+    if (id === null || typeof id === "undefined") {
+        throw Error("No user id defined.");
+    }
+
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    return (await runQuery(`
+    SELECT
+        AVG(mood) as avg_mood
+    FROM user_data
+    WHERE
+        user_id = $1 
+        AND (date = $2
+        OR date = $3)
+    GROUP BY date
+    ORDER BY date DESC;`, id, today, yesterday))?.rowsOfObjects();
+}
+
+
 export const addReportForUser = async (report, user) => {
 
     debug("LOG", "Add report", report, user);

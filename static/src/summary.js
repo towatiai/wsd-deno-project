@@ -39,8 +39,8 @@ $(async () => {
     const monthSelect = $("#month-select");
 
     const today = new Date();
-    const month = today.getMonth() + 1;
-    const week = $.datepicker.iso8601Week(today); // I hate dates
+    const month = today.getMonth();
+    const week = $.datepicker.iso8601Week(today) - 1; // I hate dates
     
     monthSelect.val(month);
     weekSelect.val(week);
