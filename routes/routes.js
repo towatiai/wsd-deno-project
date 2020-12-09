@@ -1,5 +1,5 @@
 import { Router } from "../deps.js";
-import { getSummaryByWeekAndMonth } from "./apis/summaryApi.js";
+import { getGeneralSummary, getGeneralSummaryByDate, getSummaryByWeekAndMonth } from "./apis/summaryApi.js";
 import { homePage } from "./controllers/homeController.js";
 import { addReport, getReportPage } from "./controllers/reportController.js";
 import { getSummaryPage } from "./controllers/summaryController.js";
@@ -23,5 +23,7 @@ router.post("/behavior/reporting/:type", addReport);
 router.get("/behavior/summary", getSummaryPage);
 
 router.post("/api/summary", getSummaryByWeekAndMonth);
+router.get("/api/summary", getGeneralSummary);
+router.get("/api/summary/:year/:month/:day", getGeneralSummaryByDate);
 
 export { router };

@@ -27,6 +27,37 @@ export const getReportByDate = async(id, date) => {
 }
 
 
+export const getGeneralReportSummaryByDate = async(date) => {
+
+    if (!date) {
+        throw Error("Date is not defined.");
+    }
+
+    return (await runQuery(`
+    SELECT 
+        AVG(sleep_time) as avg_sleep_time,
+        AVG(sports_time) as avg_sports_time,
+        AVG(studying_time) as avg_studying_time,
+        AVG(sleep_quality) as avg_sleep_quality,
+        AVG(mood) as avg_mood
+    FROM user_data
+    WHERE date = $1;`, date))?.rowsOfObjects()[0];
+}
+
+export const getGeneralReportSummaryForPastSevenDays = async() => {
+
+    return (await runQuery(`
+    SELECT 
+        AVG(sleep_time) as avg_sleep_time,
+        AVG(sports_time) as avg_sports_time,
+        AVG(studying_time) as avg_studying_time,
+        AVG(sleep_quality) as avg_sleep_quality,
+        AVG(mood) as avg_mood
+    FROM user_data
+    WHERE date > CURRENT_DATE - 7;`))?.rowsOfObjects()[0];
+}
+
+
 export const getReportSummaryForWeek = async(id, week) => {
     if (id === null || typeof id === "undefined" || !week) {
         throw Error("No user id defined.");
