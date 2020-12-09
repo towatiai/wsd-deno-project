@@ -24,3 +24,11 @@ body {
     width: 4rem;
     height: 4rem;
 }
+
+.card {
+    min-width: 250px;
+}
+
+.card-title {
+    font-size: 32px;
+}

@@ -18,10 +18,14 @@
     <nav class="navbar mb-5 d-flex justify-content-space-between">
         <a class="navbar-brand" href="/">Monitor</a>
         <div>
-            <ul class="navbar-nav mr-auto">
+            <ul class="nav">
                 <% if (__header.user) { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/behavior/reporting">Reporting</a>
+                    </li>
+
+                    <li class="nav-item d-inline">
+                        <a class="nav-link" href="/behavior/summary">Summary</a>
                     </li>
                 <% } %>
             </ul>

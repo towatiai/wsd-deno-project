@@ -6,7 +6,7 @@ import debug from "../utils/debug.js";
 export const getReportByDate = async(id, date) => {
 
     if (id === null || typeof id === "undefined" || !date) {
-        throw Error();
+        throw Error("No user id defined.");
     }
 
     date = new Date(date);
@@ -25,6 +25,46 @@ export const getReportByDate = async(id, date) => {
         result.find(isEveningReport)
     ];
 }
+
+
+export const getReportSummaryForWeek = async(id, week) => {
+    if (id === null || typeof id === "undefined" || !week) {
+        throw Error("No user id defined.");
+    }
+
+    return (await runQuery(`
+    SELECT 
+        AVG(sleep_time) as avg_sleep_time,
+        AVG(sports_time) as avg_sports_time,
+        AVG(studying_time) as avg_studying_time,
+        AVG(sleep_quality) as avg_sleep_quality,
+        AVG(mood) as avg_mood
+    FROM user_data
+    WHERE
+        user_id = $1 
+        AND EXTRACT(WEEK FROM date) = $2;`, id, week))?.rowsOfObjects()[0];
+
+    
+}
+
+export const getReportSummaryForMonth = async(id, month) => {
+    if (id === null || typeof id === "undefined" || !month) {
+        throw Error("No user id defined.");
+    }
+
+    return (await runQuery(`
+    SELECT 
+        AVG(sleep_time) as avg_sleep_time,
+        AVG(sports_time) as avg_sports_time,
+        AVG(studying_time) as avg_studying_time,
+        AVG(sleep_quality) as avg_sleep_quality,
+        AVG(mood) as avg_mood
+    FROM user_data
+    WHERE
+        user_id = $1 
+        AND EXTRACT(MONTH FROM date) = $2;`, id, month))?.rowsOfObjects()[0];
+}
+
 
 export const addReportForUser = async (report, user) => {
 

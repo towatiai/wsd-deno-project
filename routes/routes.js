@@ -1,6 +1,8 @@
 import { Router } from "../deps.js";
+import { getSummaryByWeekAndMonth } from "./apis/summaryApi.js";
 import { homePage } from "./controllers/homeController.js";
 import { addReport, getReportPage } from "./controllers/reportController.js";
+import { getSummaryPage } from "./controllers/summaryController.js";
 
 import { login, logout, loginPage, register, registerPage } from "./controllers/userController.js";
 
@@ -17,5 +19,9 @@ router.get("/", homePage);
 
 router.get("/behavior/reporting", getReportPage);
 router.post("/behavior/reporting/:type", addReport);
+
+router.get("/behavior/summary", getSummaryPage);
+
+router.post("/api/summary", getSummaryByWeekAndMonth);
 
 export { router };
