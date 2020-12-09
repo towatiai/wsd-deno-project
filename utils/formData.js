@@ -41,17 +41,15 @@ export default class {
         return this.form;
     }
 
-    async validate(rules, data) {
+    async validate(values, rules, data) {
 
-        const [passes, errors] = await validate(this.form, rules, data);
-
-        console.log(errors)
+        const [passes, errors] = await validate(values, rules, data);
 
         if (passes) {
             return [true, this.getEmpty()];
         } else {
-            this.form.errors = errors;
-            return [false, this.form];
+            values.errors = errors;
+            return [false, values];
         }
     }
 }
@@ -60,7 +58,6 @@ export default class {
 function parseType(value, type) {
     if ( value=== null || typeof value === undefined ) return null;
 
-    console.log(value, isNaN(value), type);
     switch(type) {
         case "string": return value.toString()
         case "float": return isNaN(value) || value === "" ? null : parseFloat(value)

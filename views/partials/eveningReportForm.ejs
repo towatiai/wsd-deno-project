@@ -1,0 +1,90 @@
+<form method="POST" action="/behavior/reporting/evening">
+
+    <div class="form-group">
+        <label>Date</label>
+        <input 
+            class="form-control <%= errors.date ? "is-invalid" : "" %>" 
+            type="text" 
+            value="<%= date %>" 
+            name="date" 
+            id="eveningDate"
+            aria-describedby="date-input-validation">
+            <div class="invalid-feedback" id="date-input-validation">
+                <%= errors.date?.minLength %>
+            </div>
+    </div>
+
+    <div class="form-group">
+        <label>Time spent on sports and exercise</label>
+        <div class="input-group mb-3">
+            <input 
+                type="number" 
+                name="sportsTime"
+                value="<%= sportsTime %>"
+                class="form-control <%= errors.sportsTime ? "is-invalid" : "" %>" 
+                aria-label="Sports time"
+                aria-describedby="sports-time">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="sports-time">hours</span>
+            </div>
+            <div class="invalid-feedback" id="sports-time">
+                <%= errors.sportsTime?.required || errors.sportsTime?.minNumber %>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Time spent on studying</label>
+        <div class="input-group mb-3">
+            <input 
+                type="number" 
+                name="studyingTime"
+                value="<%= studyingTime %>"
+                class="form-control <%= errors.studyingTime ? "is-invalid" : "" %>" 
+                aria-label="Studying time"
+                aria-describedby="studying-time">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="studying-time">hours</span>
+            </div>
+            <div class="invalid-feedback" id="studying-time">
+                <%= errors.studyingTime?.required || errors.studyingTime?.minNumber %>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Regularity and quality of eating</label>
+        <input 
+            class="<%= errors.eatingQuality ? "is-invalid" : "" %>"
+            style="display: none;" 
+            value="<%= eatingQuality %>" 
+            type="text" 
+            id="eating-quality-value" 
+            name="eatingQuality"
+            aria-describedby="eating-quality-input-validation">
+        <div class="slider" id="eating-quality-slider"></div>
+        <div class="invalid-feedback" id="eating-quality-input-validation">
+            <%= errors.eatingQuality?.minValue || errors.eatingQuality?.maxValue  %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Mood</label>
+        <input 
+        class="<%= errors.mood ? "is-invalid" : "" %>"
+            style="display: none;" 
+            type="text" 
+            id="evening-mood-value" 
+            name="mood"
+            value="<%= mood %>" 
+            aria-describedby="evening-mood-input-validation">
+        <div class="slider" id="evening-mood-slider"></div>
+        <div class="invalid-feedback" id="evening-mood-input-validation">
+            <%= errors.mood?.minValue || errors.mood?.maxValue  %>
+        </div>
+    </div>
+
+    <input class="btn btn-success" value="Save" type="submit">
+</form>

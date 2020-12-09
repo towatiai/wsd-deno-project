@@ -64,8 +64,11 @@ function createDatepicker(id) {
 $(() => {
     
     createDatepicker("morningDate");
+    createDatepicker("eveningDate");
     
     createSlider("sleep-quality-slider", "sleep-quality-value");
     createSlider("morning-mood-slider", "morning-mood-value");
     
+    createSlider("eating-quality-slider", "eating-quality-value");
+    createSlider("evening-mood-slider", "evening-mood-value");
 })

@@ -1,0 +1,70 @@
+<form method="POST" action="/behavior/reporting/morning">
+
+    <div class="form-group">
+        <label>Date</label>
+        <input 
+            class="form-control <%= errors.date ? "is-invalid" : "" %>" 
+            type="text" 
+            value="<%= date %>" 
+            name="date" 
+            id="morningDate"
+            aria-describedby="date-input-validation">
+            <div class="invalid-feedback" id="date-input-validation">
+                <%= errors.date?.minLength %>
+            </div>
+    </div>
+
+    <div class="form-group">
+        <label>Sleep duration</label>
+        <div class="input-group mb-3">
+            <input 
+                type="number" 
+                name="sleepTime"
+                value="<%= sleepTime %>"
+                class="form-control <%= errors.sleepTime ? "is-invalid" : "" %>" 
+                aria-label="Sleep duration"
+                aria-describedby="sleep-duration">
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="sleep-duration">hours</span>
+            </div>
+            <div class="invalid-feedback" id="sleep-duration">
+                <%= errors.sleepTime?.required || errors.sleepTime?.minNumber %>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Sleep quality</label>
+        <input 
+            class="<%= errors.sleepQuality ? "is-invalid" : "" %>"
+            style="display: none;" 
+            value="<%= sleepQuality %>" 
+            type="text" 
+            id="sleep-quality-value" 
+            name="sleepQuality"
+            aria-describedby="sleep-quality-input-validation">
+        <div class="slider" id="sleep-quality-slider"></div>
+        <div class="invalid-feedback" id="sleep-quality-input-validation">
+            <%= errors.sleepQuality?.minValue || errors.sleepQuality?.maxValue  %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Mood</label>
+        <input 
+        class="<%= errors.mood ? "is-invalid" : "" %>"
+            style="display: none;" 
+            type="text" 
+            id="morning-mood-value" 
+            name="mood"
+            value="<%= mood %>" 
+            aria-describedby="morning-mood-input-validation">
+        <div class="slider" id="morning-mood-slider"></div>
+        <div class="invalid-feedback" id="morning-mood-input-validation">
+            <%= errors.mood?.minValue || errors.mood?.maxValue  %>
+        </div>
+    </div>
+
+    <input class="btn btn-success" value="Save" type="submit">
+</form>

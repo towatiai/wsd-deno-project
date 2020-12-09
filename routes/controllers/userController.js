@@ -22,11 +22,11 @@ export const registerPage = async ({ render }) => {
 }
 
 export const login = async ({ request, response, render, session }) => {
-    await loginForm.parse(request);
+    const form = await loginForm.parse(request);
 
     const user = {
-        email: loginForm.form.email,
-        password: loginForm.form.password
+        email: form.email,
+        password: form.password
     };
 
     const [authenticated, userResult] = await userService.login(user);
@@ -61,11 +61,11 @@ export const logout = async ({ session, response }) => {
 
 export const register = async ({ request, response, render }) => {
 
-    await registerForm.parse(request);
+    const form = await registerForm.parse(request);
 
-    const password = registerForm.form.password;
+    const password = form.password;
 
-    const [passes, data] = await registerForm.validate({
+    const [passes, data] = await registerForm.validate(form, {
         email: [required, isEmail, uniqueEmail],
         password: [required, minLength(4)],
         passwordVerify: [required, equals(password)]

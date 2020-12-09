@@ -18,13 +18,14 @@ CREATE UNIQUE INDEX ON users((lower(email)));
 
 const CREATE_USER_DATA = `
 CREATE TABLE IF NOT EXISTS user_data (
+    id              SERIAL PRIMARY KEY,
     sleep_time      FLOAT8,
     sleep_quality   INTEGER,
     mood            INTEGER,
     sports_time     FLOAT8, 
     studying_time   FLOAT8,
-    eating          INTEGER,
-    datetime        timestamptz NOT NULL,
+    eating_quality  INTEGER,
+    date            DATE NOT NULL,
     user_id         INTEGER REFERENCES users(id)
 );
 `;
