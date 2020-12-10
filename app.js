@@ -5,9 +5,10 @@ import {
     adapterFactory,
     Session
 } from "./deps.js";
-import { router } from "./routes/routes.js";
+import Router from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
 import { addUserData, authorization } from './middlewares/authorization.js';
+import runQuery from "./database/runQuery.js";
 
 const app = new Application();
 
@@ -30,7 +31,9 @@ app.use(middleware.serveStaticFilesMiddleware);
 app.use(authorization);
 app.use(addUserData);
 
-app.use(router.routes());
+const router = new Router(runQuery);
+
+app.use(router.getRoutes());
  
 if (!Deno.env.get('TEST_ENVIRONMENT')) {
     app.listen({ port: 7777 });

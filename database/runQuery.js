@@ -24,6 +24,5 @@ export default async (query, ...args) => {
 
     } finally {
         await client.release();
-
     }
 }

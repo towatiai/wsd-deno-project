@@ -15,7 +15,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <body>
-    <nav class="navbar mb-5 d-flex justify-content-space-between">
+    <nav class="navbar mb-5 p-3 d-flex justify-content-space-between shadow-sm">
         <a class="navbar-brand" href="/">Monitor</a>
         <div>
             <ul class="nav">
@@ -35,7 +35,7 @@
 
             <% if (__header.user) { %>
 
-            <span class="mt-2">
+            <span style="margin-top: 6px;">
                 <svg class="icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                         clip-rule="evenodd"></path>
@@ -51,6 +51,7 @@
             <% } else { %>
 
             <a class="btn btn-primary" href="/auth/login">Sign in</a>
+            <a class="btn btn-outline-primary ml-3" href="/auth/register">Register</a>
 
             <% } %>
 

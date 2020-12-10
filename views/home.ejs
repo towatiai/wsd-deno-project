@@ -14,7 +14,7 @@
 
 <% if (today?.avg_mood && yesterday?.avg_mood) { %>
 
-<h3>Mood trend</h3>
+<h3>Your mood trend</h3>
 
 <% if (today.avg_mood - yesterday.avg_mood > 0) { %>
 
@@ -55,5 +55,52 @@
 </div>
 
 <% } %>
+
+<h3>General trends</h3>
+<p>These statistics are generated from all users from the last seven days:</p>
+
+<div class="d-flex flex-wrap mt-3">
+
+    <div class="card mb-3 mr-3" style="max-width: 18rem;">
+        <div class="card-header">Sleep</div>
+
+        <div class="card-body">
+            <h5 class="card-title"><%= parseFloat(generalReport.avg_sleep_time).toFixed(1) %></h5>
+            <p class="card-text">hours on average</p>
+        </div>
+        <div class="card-body">
+            <div class="d-flex">
+                <h5 class="card-title"><%= parseFloat(generalReport.avg_sleep_quality).toFixed(1) %></h5>
+                <p style="margin-top: 0.8rem;">/5</p>
+            </div>
+            
+            <p class="card-text">quality</p>
+        </div>
+    </div>
+
+    <div class="card mb-3 mr-3" style="max-width: 18rem;">
+        <div class="card-header">Exercise and studies</div>
+        <div class="card-body">
+            <h5 class="card-title"><%= parseFloat(generalReport.avg_sports_time).toFixed(1) %></h5>
+            <p class="card-text">hours spent on sports</p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><%= parseFloat(generalReport.avg_studying_time).toFixed(1) %></h5>
+            <p class="card-text">hours spent on studies</p>
+        </div>
+    </div>
+
+    <div class="card mb-3 mr-3" style="max-width: 18rem;">
+        <div class="card-header">Mood</div>
+        <div class="card-body">
+            <div class="d-flex">
+                <h5 class="card-title"><%= parseFloat(generalReport.avg_mood).toFixed(1) %></h5>    
+                <p style="margin-top: 0.8rem;">/5</p>
+            </div>
+            <p class="card-text">out of five</p>
+        </div>
+    </div>
+</div>
+
 
 <%- include("./partials/footer.ejs") %>
