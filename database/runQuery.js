@@ -4,7 +4,7 @@ import debug from "../utils/debug.js";
 export const createQueryRunner = (dbConfig, nConnections) => {
 
     console.log(dbConfig);
-    const clientPool = new Pool("postgres://kyogdktj:cyZUugABcGy2NEbGro3hdc2MfMJyuPKx@hattie.db.elephantsql.com:5432/kyogdktj", nConnections);
+    const clientPool = new Pool(dbConfig, nConnections);
 
     return async (query, ...args) => {
 
