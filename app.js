@@ -35,8 +35,8 @@ const router = new Router(runQuery);
 
 app.use(router.getRoutes());
  
-if (!Deno.env.get('TEST_ENVIRONMENT')) {
-    app.listen({ port: 7777 });
-}
+let port = Deno.args[Deno.args.length - 1] ?? 7777;
+app.listen({ port: Number(port) });
+
 
 export default app;
