@@ -3,12 +3,13 @@ import {
     viewEngine, 
     engineFactory, 
     adapterFactory,
-    Session
+    Session,
+    config
 } from "./deps.js";
 import Router from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
 import { addUserData, authorization } from './middlewares/authorization.js';
-import runQuery from "./database/runQuery.js";
+import { createQueryRunner } from "./database/runQuery.js";
 
 const app = new Application();
 
@@ -31,7 +32,12 @@ app.use(middleware.serveStaticFilesMiddleware);
 app.use(authorization);
 app.use(addUserData);
 
-const router = new Router(runQuery);
+let databaseUrl = Deno.env.toObject().DATABASE_URL;
+if (typeof databaseUrl === "undefined") {
+    databaseUrl = config().DATABASE_URL;
+}
+
+const router = new Router(createQueryRunner(databaseUrl, 5));
 
 app.use(router.getRoutes());
  
