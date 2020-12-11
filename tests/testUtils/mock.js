@@ -8,17 +8,17 @@ class Mock {
         this.mockContext = {
             timesCalled: 0,
             calledWith: [],
-            returnValues: {}
+            returnValues: []
         };
 
         this.mockFunction = (...params) => {
             this.mockContext.timesCalled++;
             this.mockContext.calledWith.push(params);
 
-            const key = Object.keys(this.mockContext.returnValues).find(k => 
-                this.indexOfParams(k.split("|"), [params]) === 0);
+            const value = this.mockContext.returnValues.find(k =>
+                this.indexOfParams(k.params, [params]) === 0);
 
-            return this.mockContext.returnValues[key];
+            return value?.value;
         };
     }
 
@@ -32,7 +32,7 @@ class Mock {
     reset() {
         this.mockContext.timesCalled = 0;
         this.mockContext.calledWith = [];
-        this.mockContext.returnValues = {};
+        this.mockContext.returnValues = [];
     }
 
     /**
@@ -43,6 +43,12 @@ class Mock {
         return this.mockContext.timesCalled === t;
     }
 
+    getParams(i) {
+        if (typeof index === "undefined") 
+            return this.mockContext.calledWith[this.mockContext.calledWith.length - 1];
+
+        return this.mockContext.calledWith[i];
+    }
 
     /**
      * Checks if the mocked function was called with given parameters.
@@ -55,17 +61,22 @@ class Mock {
     withArgs(...params) {
         return {
             returns: (value) => {
-                this.mockContext.returnValues[params.join("|")] = value;
+                this.mockContext.returnValues.push({
+                    params: params, value: value
+                });
             },
             returnsDatabaseResult: (value) => {
                 if (!Array.isArray(value)) {
                     throw new Error("Use arrays when creating mocked database results.");
                 }
 
-                this.mockContext.returnValues[params.join("|")] = {
-                    rowCount: value.length,
-                    rowsOfObjects: () => value
-                }
+                this.mockContext.returnValues.push({
+                    params: params,
+                    value: {
+                        rowCount: value.length,
+                        rowsOfObjects: () => value
+                    }
+                });
             }
         }
     }
@@ -89,10 +100,15 @@ class Mock {
                 if (searchedParams[i] === callParams[i]) continue;
 
                 if (!isNaN(searchedParams[i])) {
-                    if (parseInt(searchedParams[i]) === callParams[i] 
-                    || parseFloat(searchedParams[i]) === callParams[i])
-                    continue;
+                    if (parseInt(searchedParams[i]) === callParams[i]
+                        || parseFloat(searchedParams[i]) === callParams[i])
+                        continue;
                 }
+
+                if (typeof searchedParams[i] === "object" && 
+                    Object.keys(searchedParams[i])
+                    .every(key => searchedParams[i][key] === callParams[i][key])
+                    ) continue;
 
                 // If parameter's types doesn't match and they are not equal, the
                 // mock function was 
@@ -112,6 +128,14 @@ export const type = {
     ANY: "any",
     STRING: "string",
     NUMBER: "number"
+}
+
+export const mockRequest = (data) => {
+    return {
+        body: (ctx) => {
+            return ctx?.type === "json" ? ({value: data}) : ({ value: { get: (key) => data[key] }})
+        }
+    }
 }
 
 export default Mock;

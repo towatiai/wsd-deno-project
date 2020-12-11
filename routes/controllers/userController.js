@@ -26,7 +26,6 @@ class UserController {
 
     registerPage = async ({ render }) => {
         render("registration.ejs", Object.assign(registerForm.getEmpty(), { registerSuccess: false }));
-        return;
     }
 
     login = async ({ request, response, render, session }) => {
@@ -92,7 +91,12 @@ class UserController {
             return;
         }
 
-        await this.userService.register(form);
+        const user = {
+            email: form.email, 
+            password: form.password
+        };
+
+        await this.userService.register(user);
 
         render("registration.ejs", Object.assign(registerForm.getEmpty(), { registerSuccess: true }));
     }
