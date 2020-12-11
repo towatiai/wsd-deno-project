@@ -11,18 +11,17 @@
 
 <p>In the summary page you can find useful statistics and trends. Happy reporting!</p>
 
-
 <% if (today?.avg_mood && yesterday?.avg_mood) { %>
 
 <h3>Your mood trend</h3>
 
 <% if (today.avg_mood - yesterday.avg_mood > 0) { %>
 
-<p>You are looking gloomy today!</p>
+<p>Things are looking gloomy today!</p>
 
 <% } else { %>
 
-<p>You are looking bright today!</p>
+<p>Things are looking bright today!</p>
 
 <% } %>
 

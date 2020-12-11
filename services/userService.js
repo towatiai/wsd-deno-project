@@ -1,12 +1,11 @@
-import runQuery from "../database/runQuery.js";
-import { hash, compare } from "../deps.js";
 import debug from "../utils/debug.js";
 
 
 class UserService {
 
-    constructor(queryRunner) {
+    constructor(queryRunner, bcrypt) {
         this.runQuery = queryRunner;
+        this.bcrypt = bcrypt;
     }
 
     getUserByEmail = async (email) => {
@@ -17,7 +16,7 @@ class UserService {
     login = async (user) => {
         debug("LOG", "Logging in", user);
 
-        if (!user.password || !user.email) {
+        if (!user || !user.password || !user.email) {
             return [false, null];
         }
 
@@ -30,7 +29,7 @@ class UserService {
 
         const userResult = result.rowsOfObjects()[0];
 
-        if (await compare(user.password, userResult.password)) {
+        if (await this.bcrypt.compare(user.password, userResult.password)) {
             return [true, userResult];
         }
 
@@ -45,7 +44,7 @@ class UserService {
             throw new ReferenceError("Unable to register user. Missing user information.", user);
         }
 
-        const password = await hash(user.password);
+        const password = await this.bcrypt.hash(user.password);
         const email = user.email;
 
         await this.runQuery("INSERT INTO users (email, password) VALUES ($1, $2);", email, password);

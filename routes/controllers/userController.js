@@ -1,5 +1,5 @@
 import Form from "../../utils/formData.js";
-import { isEmail, required, invalid, minLength } from "../../deps.js";
+import { isEmail, required, invalid, minLength, bcrypt } from "../../deps.js";
 
 const registerForm = new Form({
     email: "",
@@ -16,7 +16,7 @@ const loginForm = new Form({
 class UserController {
 
     constructor(UserService, runQuery) {
-        this.userService = new UserService(runQuery);
+        this.userService = new UserService(runQuery, bcrypt);
     }
 
 

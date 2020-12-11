@@ -60,7 +60,7 @@
 </div>
 
 <div class="d-flex">
-    <h3 class="mt-3">Weekly average</h3>
+    <h3 class="mt-3">Monthly average</h3>
     <span class="ml-3" style="width: 200px; margin-top: 16px;">
         <select class="custom-select" id="month-select">
             <option value="1">January</option>
@@ -89,7 +89,10 @@
             <p class="card-text">hours on average</p>
         </div>
         <div class="card-body">
-            <h5 class="card-title" id="avg_sleep_quality-month"></h5>
+            <div class="d-flex">
+                <h5 class="card-title" id="avg_sleep_quality-month"></h5>
+                <p style="margin-top: 0.8rem;">/5</p>
+            </div>
             <p class="card-text">quality</p>
         </div>
     </div>
@@ -109,7 +112,10 @@
     <div class="card mb-3 mr-3" style="max-width: 18rem;">
         <div class="card-header">Mood</div>
         <div class="card-body">
-            <h5 class="card-title" id="avg_mood-month"></h5>
+            <div class="d-flex">
+                <h5 class="card-title" id="avg_mood-month"></h5>
+                <p style="margin-top: 0.8rem;">/5</p>
+            </div>
             <p class="card-text">out of five</p>
         </div>
     </div>

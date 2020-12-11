@@ -123,6 +123,10 @@ class ReportService {
 
     addReportForUser = async (report, user) => {
 
+        if (!report || !user) {
+            throw new Error("Cannot add report. Missing report or user.");
+        }
+
         debug("LOG", "Add report", report, user);
 
         const id = user.id;

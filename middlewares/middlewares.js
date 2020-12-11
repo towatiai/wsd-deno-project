@@ -9,11 +9,13 @@ const errorMiddleware = async(context, next) => {
   }
 }
 
-const requestTimingMiddleware = async({ request }, next) => {
+const requestTimingMiddleware = async({ request, session }, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
-  debug("LOG", "Request timing", `${request.method} ${request.url.pathname} - ${ms} ms`);
+
+  const user = await session.get("user");
+  debug("LOG", "Request timing", `${request.method} ${request.url.pathname} - ${ms} ms`, `User: ${user?.id ?? "anonymous"}`);
 }
 
 const serveStaticFilesMiddleware = async(context, next) => {

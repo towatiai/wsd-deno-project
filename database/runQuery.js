@@ -1,11 +1,12 @@
 import { Pool, config } from "../deps.js";
 import debug from "../utils/debug.js";
 
-if (!config().DATABASE_URL?.length) {
-    console.error("%cCannot connect to database, because database URL is not defined. Please add environmental variable DATABASE_URL.", "color:salmon;");
+let dbConfig = {};
+if (config().DATABASE_URL?.length) {
+    dbConfig = config().DATABASE_URL;
 }
 
-const clientPool = new Pool(config().DATABASE_URL, 5);
+const clientPool = new Pool(dbConfig, 5);
 
 export default async (query, ...args) => {
 
